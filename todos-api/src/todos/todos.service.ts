@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Todo } from './schemas/todo.schema';
 import { Model } from 'mongoose';
 import { CreateTodoDto } from './models/create-todo-dto';
-import { v4 as uuid } from 'uuid';
 import { SearchTodoDto } from './models/search-todo-dto';
 import { UpdateTodoDto } from './models/update-todo-dto';
 
@@ -12,9 +11,7 @@ export class TodosService {
   constructor(@InjectModel(Todo.name) private todoModel: Model<Todo>) {}
 
   async create(createTodoDto: CreateTodoDto): Promise<Todo> {
-    const createdTodo = new this.todoModel(createTodoDto);
-    createdTodo.id = uuid();
-    return createdTodo.save();
+    return this.todoModel.create(createTodoDto);
   }
 
   async getAll(): Promise<Todo[]> {
@@ -58,7 +55,6 @@ export class TodosService {
   }
 
   async update(updateTodoDto: UpdateTodoDto): Promise<Todo> {
-    // const updatedTodo = new this.todoModel(updateTodoDto);
     return this.todoModel.update({ _id: updateTodoDto._id }, { ...updateTodoDto });
   }
 

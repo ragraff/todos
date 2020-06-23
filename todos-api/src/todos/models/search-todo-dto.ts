@@ -3,17 +3,17 @@ import { IsPriorityString } from '../../common/is-priority-string';
 
 export class SearchTodoDto {
   @IsOptional()
-  title: string;
+  title?: string;
 
   @IsOptional()
   @Validate(IsPriorityString)
-  priority: string;
+  priority?: string;
 
   @IsOptional()
   @IsDateString()
-  startOfRange: string;
+  startOfRange?: string;
 
   @IsOptional()
   @IsDateString()
-  endOfRange: string;
+  endOfRange?: string;
 }

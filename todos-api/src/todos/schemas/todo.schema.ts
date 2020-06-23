@@ -10,10 +10,10 @@ export class Todo extends Document {
   description: string;
 
   @Prop()
-  priority: string;
+  priority?: string;
 
   @Prop()
-  dueDate: string;
+  dueDate?: string;
 }
 
 export const TodoSchema = SchemaFactory.createForClass(Todo);

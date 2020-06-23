@@ -10,9 +10,9 @@ export class CreateTodoDto {
 
   @IsOptional()
   @Validate(IsPriorityString)
-  priority: string;
+  priority?: string;
 
   @IsOptional()
   @IsDateString()
-  dueDate: string;
+  dueDate?: string;
 }

@@ -7,16 +7,16 @@ export class UpdateTodoDto {
   _id: string;
 
   @Optional()
-  title: string;
+  title?: string;
 
   @Optional()
-  description: string;
+  description?: string;
 
   @IsOptional()
   @Validate(IsPriorityString)
-  priority: string;
+  priority?: string;
 
   @IsOptional()
   @IsDateString()
-  dueDate: string;
+  dueDate?: string;
 }
