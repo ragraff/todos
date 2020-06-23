@@ -8,8 +8,8 @@
     "test-api"
   ],
   "scripts": {
-    "lint-api": "cd todos-api && npm run lint",
-    "test-api": "cd todos-api && npm run test:cov"
+    "lint-api": "npm run lint --prefix todos-api",
+    "test-api": "npm run test:cov --prefix todos-api"
   },
   "author": "",
   "license": "ISC",
