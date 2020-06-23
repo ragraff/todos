@@ -15,17 +15,17 @@ export class TodosController {
   }
 
   @Get('search')
-  search(@Query() searchTodoDto: SearchTodoDto): Promise<Todo[]> {
+  async search(@Query() searchTodoDto: SearchTodoDto): Promise<Todo[]> {
     return this.todoService.search(searchTodoDto);
   }
 
   @Get('id/:id')
-  getById(@Param('id') id: string): Promise<Todo> {
+  async getById(@Param('id') id: string): Promise<Todo> {
     return this.todoService.getById(id);
   }
 
   @Get('priority/:priority')
-  getByPriority(@Param('priority', ParsePriorityStringPipe) priority: string): Promise<Todo[]> {
+  async getByPriority(@Param('priority', ParsePriorityStringPipe) priority: string): Promise<Todo[]> {
     return this.todoService.getByPriority(priority);
   }
 
@@ -35,12 +35,12 @@ export class TodosController {
   }
 
   @Put()
-  update(@Body() updateTodo: UpdateTodoDto): Promise<Todo> {
+  async update(@Body() updateTodo: UpdateTodoDto): Promise<Todo> {
     return this.todoService.update({ ...updateTodo, priority: updateTodo.priority.toUpperCase() });
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string): string {
-    return `deleting ${id}`;
+  async delete(@Param('id') id: string): Promise<Todo> {
+    return this.todoService.delete(id);
   }
 }

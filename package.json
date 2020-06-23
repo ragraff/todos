@@ -4,10 +4,12 @@
   "description": "A todo app to practice NestJs",
   "main": "index.js",
   "pre-commit": [
-    "lint"
+    "lint-api",
+    "test-api"
   ],
   "scripts": {
-    "lint": "eslint ./ --cache --ignore-pattern .gitignore"
+    "lint-api": "cd todos-api && npm run lint",
+    "test-api": "cd todos-api && npm run test"
   },
   "author": "",
   "license": "ISC",

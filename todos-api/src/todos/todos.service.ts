@@ -22,7 +22,7 @@ export class TodosService {
   }
 
   async getById(id: string): Promise<Todo> {
-    return this.todoModel.findOne({ id: id }).exec();
+    return this.todoModel.findOne({ _id: id }).exec();
   }
 
   async getByPriority(priority: string): Promise<Todo[]> {
@@ -59,9 +59,11 @@ export class TodosService {
 
   async update(updateTodoDto: UpdateTodoDto): Promise<Todo> {
     // const updatedTodo = new this.todoModel(updateTodoDto);
-    return this.todoModel.update(
-      { _id: updateTodoDto._id },
-      { ...updateTodoDto },
-    );
+    return this.todoModel.update({ _id: updateTodoDto._id }, { ...updateTodoDto });
+  }
+
+  async delete(id: string): Promise<Todo> {
+    const theTodo = await this.todoModel.findOne({ _id: id }).exec();
+    return theTodo.remove();
   }
 }
