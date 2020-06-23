@@ -1,0 +1,20 @@
+{
+  "name": "todos",
+  "version": "1.0.0",
+  "description": "A todo app to practice NestJs",
+  "main": "index.js",
+  "pre-commit": [
+    "lint"
+  ],
+  "scripts": {
+    "lint": "eslint ./ --cache --ignore-pattern .gitignore"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jest": "^26.0.0",
+    "jest": "^26.0.1",
+    "pre-commit": "^1.2.2"
+  }
+}

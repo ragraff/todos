@@ -1,3 +1,5 @@
+/node_modules
+
 # OS
 .DS_Store
 
@@ -16,3 +18,4 @@
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+node_modules
