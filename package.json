@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "lint-api": "cd todos-api && npm run lint",
-    "test-api": "cd todos-api && npm run test"
+    "test-api": "cd todos-api && npm run test:cov"
   },
   "author": "",
   "license": "ISC",
