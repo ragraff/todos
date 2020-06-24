@@ -5,18 +5,20 @@
   "main": "index.js",
   "pre-commit": [
     "lint-api",
-    "test-api"
+    "test-api",
+    "lint-ui",
+    "test-ui"
   ],
   "scripts": {
     "lint-api": "npm run lint --prefix todos-api",
-    "test-api": "npm run test:cov --prefix todos-api"
+    "test-api": "npm run test:cov --prefix todos-api",
+    "lint-ui": "npm run lint --prefix todos-ui",
+    "test-ui": "npm run test --prefix todos-ui"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
-    "@types/jest": "^26.0.0",
-    "jest": "^26.0.1",
     "pre-commit": "^1.2.2"
   }
 }
