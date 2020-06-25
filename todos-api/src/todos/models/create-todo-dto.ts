@@ -5,7 +5,7 @@ export class CreateTodoDto {
   @IsNotEmpty()
   title: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   description: string;
 
   @IsOptional()

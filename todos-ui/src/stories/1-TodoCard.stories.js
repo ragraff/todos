@@ -11,6 +11,6 @@ const todo = {
   title: 'Title',
   description: 'desc',
   priority: Priority.LOW,
-  dueDate: new Date(2020, 1, 23),
+  dueDate: new Date(2020, 1, 23, 13, 23, 0, 0),
 };
 export const Todo_Card = () => <TodoCard todo={todo} />;

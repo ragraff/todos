@@ -10,8 +10,9 @@ import { UpdateTodoDto } from './models/update-todo-dto';
 export class TodosService {
   constructor(@InjectModel(Todo.name) private todoModel: Model<Todo>) {}
 
-  async create(createTodoDto: CreateTodoDto): Promise<Todo> {
-    return this.todoModel.create(createTodoDto);
+  async create(createTodoDto: CreateTodoDto): Promise<Todo[]> {
+    await this.todoModel.create(createTodoDto);
+    return this.getAll();
   }
 
   async getAll(): Promise<Todo[]> {
@@ -54,12 +55,14 @@ export class TodosService {
     return this.todoModel.find(criteria).exec();
   }
 
-  async update(updateTodoDto: UpdateTodoDto): Promise<Todo> {
-    return this.todoModel.update({ _id: updateTodoDto._id }, { ...updateTodoDto });
+  async update(updateTodoDto: UpdateTodoDto): Promise<Todo[]> {
+    await this.todoModel.update({ _id: updateTodoDto._id }, { ...updateTodoDto });
+    return this.getAll();
   }
 
-  async delete(id: string): Promise<Todo> {
-    const theTodo = await this.todoModel.findOne({ _id: id }).exec();
-    return theTodo.remove();
+  async delete(_id: string): Promise<Todo[]> {
+    const theTodo = await this.todoModel.findOne({ _id: _id }).exec();
+    await theTodo.remove();
+    return this.getAll();
   }
 }

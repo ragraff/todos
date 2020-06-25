@@ -6,5 +6,3 @@ export const MockState: ApplicationState = {
     todos: mockTodos,
   },
 };
-
-export const MockEmptyState: ApplicationState = {};

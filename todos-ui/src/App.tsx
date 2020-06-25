@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import TodosListConnected from './screens/todos/todos-list';
+import TodosList from './screens/todos/todos-list';
 
 function App() {
   return (
     <div className="App">
-      <TodosListConnected></TodosListConnected>
+      <TodosList></TodosList>
     </div>
   );
 }

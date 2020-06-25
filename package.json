@@ -13,7 +13,8 @@
     "lint-api": "npm run lint --prefix todos-api",
     "test-api": "npm run test:cov --prefix todos-api",
     "lint-ui": "npm run lint --prefix todos-ui",
-    "test-ui": "npm run test --prefix todos-ui"
+    "test-ui": "npm run test --prefix todos-ui",
+    "storybook": "npm run storybook --prefix todos-ui"
   },
   "author": "",
   "license": "ISC",

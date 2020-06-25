@@ -30,17 +30,17 @@ export class TodosController {
   }
 
   @Post()
-  async create(@Body() createTodo: CreateTodoDto): Promise<Todo> {
+  async create(@Body() createTodo: CreateTodoDto): Promise<Todo[]> {
     return this.todoService.create({ ...createTodo, priority: createTodo.priority.toUpperCase() });
   }
 
   @Put()
-  async update(@Body() updateTodo: UpdateTodoDto): Promise<Todo> {
+  async update(@Body() updateTodo: UpdateTodoDto): Promise<Todo[]> {
     return this.todoService.update({ ...updateTodo, priority: updateTodo.priority.toUpperCase() });
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string): Promise<Todo> {
+  async delete(@Param('id') id: string): Promise<Todo[]> {
     return this.todoService.delete(id);
   }
 }

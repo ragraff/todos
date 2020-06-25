@@ -1,8 +1,12 @@
 const getTodosMockFn = jest.fn();
+const updateTodosMockFn = jest.fn();
+const deleteTodosMockFn = jest.fn();
 
 jest.mock('../../services/todos.service', () => {
   return {
     getTodos: getTodosMockFn,
+    updateTodos: updateTodosMockFn,
+    deleteTodos: deleteTodosMockFn,
   };
 });
 
