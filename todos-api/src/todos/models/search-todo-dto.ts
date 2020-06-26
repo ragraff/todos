@@ -1,5 +1,5 @@
-import { IsDateString, IsOptional, Validate } from 'class-validator';
-import { IsPriorityString } from '../../common/is-priority-string';
+import { IsDateString, IsOptional, Validate, IsNotEmpty } from 'class-validator';
+import { IsPriorityString, IsSortTypeString, IsSortDirectionString } from '../../common/is-priority-string';
 
 export class SearchTodoDto {
   @IsOptional()
@@ -7,7 +7,7 @@ export class SearchTodoDto {
 
   @IsOptional()
   @Validate(IsPriorityString)
-  priority?: string;
+  priorities?: string[];
 
   @IsOptional()
   @IsDateString()
@@ -16,4 +16,12 @@ export class SearchTodoDto {
   @IsOptional()
   @IsDateString()
   endOfRange?: string;
+
+  @IsNotEmpty()
+  @Validate(IsSortTypeString)
+  sortType: string;
+
+  @IsNotEmpty()
+  @Validate(IsSortDirectionString)
+  sortDirection: string;
 }

@@ -14,8 +14,8 @@ export class TodosController {
     return this.todoService.getAll();
   }
 
-  @Get('search')
-  async search(@Query() searchTodoDto: SearchTodoDto): Promise<Todo[]> {
+  @Post('search')
+  async search(@Body() searchTodoDto: SearchTodoDto): Promise<Todo[]> {
     return this.todoService.search(searchTodoDto);
   }
 

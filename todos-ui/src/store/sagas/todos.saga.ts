@@ -1,4 +1,4 @@
-import { takeLeading, all, put, call } from 'redux-saga/effects';
+import { takeLeading, all, put, call, select } from 'redux-saga/effects';
 import { Todo } from '../../models/todo';
 import {
   createTodosSetAction,
@@ -13,10 +13,22 @@ import {
   deleteTodo,
   createTodo,
 } from '../../services/todos.service';
+import { getTodoFilter, getSortOptions } from '../selectors';
+import { TodoFilter } from '../../models/todo-filter';
+import { SortOptions } from '../../models/sort';
 
 export function* fetchTodosSaga(): Generator {
   try {
-    const todos: Todo[] = (yield call(getTodos) as unknown) as Todo[];
+    const filter: TodoFilter = (yield select(getTodoFilter)) as TodoFilter;
+    const sortOptions: SortOptions = (yield select(
+      getSortOptions
+    )) as SortOptions;
+
+    const todos: Todo[] = (yield call(
+      getTodos,
+      filter,
+      sortOptions
+    ) as unknown) as Todo[];
     yield put(createTodosSetAction(todos));
   } catch (error) {
     throw new Error(`Error in fetchTodosSaga: ${error}`);
@@ -56,6 +68,8 @@ export function* createTodoSaga(action: TodoCreateAction): Generator {
 export function* todosSaga() {
   return yield all([
     takeLeading(TodosActionTypes.FETCH_TODOS, fetchTodosSaga),
+    takeLeading(TodosActionTypes.SET_SORT_OPTIONS, fetchTodosSaga),
+    takeLeading(TodosActionTypes.SET_TODO_FILTER, fetchTodosSaga),
     takeLeading(TodosActionTypes.UPDATE_TODO, updateTodoSaga),
     takeLeading(TodosActionTypes.DELETE_TODO, deleteTodoSaga),
     takeLeading(TodosActionTypes.CREATE_TODO, createTodoSaga),

@@ -8,12 +8,9 @@ import {
   makeStyles,
   createStyles,
   TextField,
-  Grid,
   IconButton,
   Tooltip,
 } from '@material-ui/core';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, DateTimePicker } from '@material-ui/pickers';
 import { Todo } from '../../models/todo';
 import { Priority } from '../../models/priority';
 import {
@@ -25,6 +22,8 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import SaveIcon from '@material-ui/icons/Save';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { createTodo } from '../../services/todos.service';
+import { toTitleCase } from '../../utilities/string-helpers';
+import { DateTimePickerWrapper } from '../../common/date-time-picker-wrapper';
 
 interface TodoCardProps {
   todo: Todo;
@@ -68,11 +67,11 @@ const TodoCardComponent: FC<TodoCardProps> = ({
 }: TodoCardProps) => {
   const { title, description, priority, dueDate } = todo;
   const initialState: Todo = { ...todo };
-  const [selectedTitle, setTitle] = useState(title);
-  const [selectedDescription, setDescription] = useState(description);
-  const [selectedPriority, setPriority] = useState(priority);
+  const [selectedTitle, setTitle] = useState<string>(title);
+  const [selectedDescription, setDescription] = useState<string>(description);
+  const [selectedPriority, setPriority] = useState<string>(priority);
   const [selectedDate, setDueDate] = useState<Date>(dueDate);
-  const [isDirty, setIsDirty] = useState(false);
+  const [isDirty, setIsDirty] = useState<boolean>(false);
   const classes = useStyles();
 
   useEffect(() => {
@@ -117,15 +116,14 @@ const TodoCardComponent: FC<TodoCardProps> = ({
     deleteTodo(getCurrentTodo());
   };
 
-  const handleDateTimeChange = (date: Date | null) => {
+  const handleDateTimeChange = (date: Date | null): void => {
     setDueDate(date as Date);
   };
 
   const handlePriorityChange = (
     event: React.ChangeEvent<{ value: unknown }>
   ) => {
-    const value = event.target.value as keyof typeof Priority;
-    setPriority(Priority[value]);
+    setPriority(event.target.value as string);
   };
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -142,26 +140,10 @@ const TodoCardComponent: FC<TodoCardProps> = ({
     return Object.keys(Priority).map((key, index) => {
       return (
         <MenuItem key={index} value={key}>
-          {key}
+          {toTitleCase(key)}
         </MenuItem>
       );
     });
-  };
-
-  const renderDateTimePicker = () => {
-    return (
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <Grid container>
-          <DateTimePicker
-            margin="normal"
-            id="date-time-picker"
-            label="Due"
-            value={selectedDate}
-            onChange={handleDateTimeChange}
-          />
-        </Grid>
-      </MuiPickersUtilsProvider>
-    );
   };
 
   const renderPriority = () => {
@@ -202,20 +184,22 @@ const TodoCardComponent: FC<TodoCardProps> = ({
       <form noValidate autoComplete="off" onSubmit={handleSubmit}>
         <TextField
           required
-          id="title-input"
           value={selectedTitle}
           onChange={handleTitleChange}
           placeholder={isCreateCard ? 'Title' : undefined}
         />
         <TextField
-          id="title-description"
           value={selectedDescription}
           onChange={handleDescriptionChange}
           placeholder={isCreateCard ? 'Description' : undefined}
           multiline
         />
         <div className={classes.priorityContainer}>{renderPriority()}</div>
-        <div>{renderDateTimePicker()}</div>
+        <DateTimePickerWrapper
+          label="Due"
+          selectedDate={selectedDate}
+          handleDateTimeChange={handleDateTimeChange}
+        />
         <Tooltip title="Save">
           <IconButton aria-label="save" type="submit" disabled={!isDirty}>
             <SaveIcon />

@@ -33,13 +33,17 @@ const TodosContainer = styled.div`
     justify-items: center;
   }
 
+  .todo-header-filters {
+    text-align: start;
+  }
+
   .todo-body {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    align-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
     justify-content: center;
-    justify-items: center;
+    height: 100vh;
   }
 `;
 
@@ -76,7 +80,7 @@ const TodosListComponent: FC<TodosListProps> = ({
           </Tooltip>
         </div>
         <div className="todo-header-filters">
-          <TodoFilterForm></TodoFilterForm>
+          <TodoFilterForm />
         </div>
       </div>
       <div className="todo-body">

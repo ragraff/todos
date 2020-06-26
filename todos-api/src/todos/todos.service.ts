@@ -5,6 +5,7 @@ import { Model } from 'mongoose';
 import { CreateTodoDto } from './models/create-todo-dto';
 import { SearchTodoDto } from './models/search-todo-dto';
 import { UpdateTodoDto } from './models/update-todo-dto';
+import { sortTodos } from '../utilities/sort-helper';
 
 @Injectable()
 export class TodosService {
@@ -29,14 +30,14 @@ export class TodosService {
 
   async search(searchTodoDto: SearchTodoDto): Promise<Todo[]> {
     const criteria = {};
-    const { title, priority, startOfRange, endOfRange } = searchTodoDto;
+    const { title, priorities, startOfRange, endOfRange, sortDirection, sortType } = searchTodoDto;
 
     if (title != null && title != '') {
-      criteria['title'] = title;
+      criteria['title'] = { $regex: `.*${title}.*` };
     }
 
-    if (priority != null && priority != '') {
-      criteria['priority'] = priority.toUpperCase();
+    if (priorities != null && priorities != []) {
+      criteria['priority'] = { $in: Array.isArray(priorities) ? [...priorities] : [priorities] };
     }
 
     const dueDateCriteria = {};
@@ -52,7 +53,9 @@ export class TodosService {
       criteria['dueDate'] = { ...dueDateCriteria };
     }
 
-    return this.todoModel.find(criteria).exec();
+    const results = await this.todoModel.find(criteria).exec();
+    const sortedResults = results.sort((a, b) => sortTodos(a, b, sortType, sortDirection));
+    return sortedResults;
   }
 
   async update(updateTodoDto: UpdateTodoDto): Promise<Todo[]> {

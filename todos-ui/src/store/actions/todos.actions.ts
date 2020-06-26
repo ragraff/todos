@@ -1,6 +1,7 @@
 import { TodosActionTypes } from './todos.action.types';
 import { Todo } from '../../models/todo';
 import { TodoFilter } from '../../models/todo-filter';
+import { SortOptions } from '../../models/sort';
 
 export interface TodosFetchAction {
   type: TodosActionTypes.FETCH_TODOS;
@@ -71,5 +72,17 @@ export function createSetTodoFilterAction(
   return {
     type: TodosActionTypes.SET_TODO_FILTER,
     todoFilter: todoFilter,
+  };
+}
+
+export interface SetSortOptionsAction {
+  type: TodosActionTypes.SET_SORT_OPTIONS;
+  sortOptions: SortOptions;
+}
+
+export function createSetSortOptionsAction(sortOptions: SortOptions) {
+  return {
+    type: TodosActionTypes.SET_SORT_OPTIONS,
+    sortOptions: sortOptions,
   };
 }
