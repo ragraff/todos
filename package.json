@@ -4,22 +4,32 @@
   "description": "A todo app to practice NestJs",
   "main": "index.js",
   "pre-commit": [
-    "lint-api",
-    "test-api",
-    "lint-ui",
-    "test-ui"
+    "lint-staged && pretty-quick"
   ],
   "scripts": {
+    "lint": "concurrently --kill-others-on-fail --names lint-api,lint-ui \"npm run lint-api\" \"npm run lint-ui\"",
     "lint-api": "npm run lint --prefix todos-api",
-    "test-api": "npm run test:cov --prefix todos-api",
+    "lint-staged": "concurrently --kill-others-on-fail --names lint-api-staged,lint-ui-staged \"npm run lint-api-staged\" \"npm run lint-ui-staged\"",
+    "lint-staged-api": "npm run lint-staged --prefix todos-api",
+    "lint-staged-ui": "npm run lint-staged --prefix todos-ui",
     "lint-ui": "npm run lint --prefix todos-ui",
-    "test-ui": "npm run test --prefix todos-ui",
-    "storybook": "npm run storybook --prefix todos-ui"
+    "pretty-quick": "concurrently --kill-others-on-fail --names pretty-quick-api,pretty-quick-ui \"npm run pretty-quick-api\" \"npm run pretty-quick-ui\"",
+    "pretty-quick-api": "npm run pretty-quick --prefix todos-api",
+    "pretty-quick-ui": "npm run pretty-quick --prefix todos-ui",
+    "quality": "concurrently --kill-others-on-fail --names quality-api,quality-ui \"npm run quality-api\" \"npm run quality-ui\"",
+    "quality-api": "concurrently --kill-others-on-fail --names lint-api,test-api \"npm run lint-api\" \"npm run test-api\"",
+    "quality-ui": "concurrently --kill-others-on-fail --names lint-ui,test-ui \"npm run lint-ui\" \"npm run test-ui\"",
+    "storybook": "npm run storybook --prefix todos-ui",
+    "test": "concurrently --kill-others-on-fail --names test-api,test-ui \"npm run test-api\" \"npm run test-ui\"",
+    "test-api": "npm run test:cov --prefix todos-api",
+    "test-ui": "npm run test --prefix todos-ui"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
+    "concurrently": "^5.2.0",
+    "husky": "^4.2.5",
     "pre-commit": "^1.2.2"
   }
 }
