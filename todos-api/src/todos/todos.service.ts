@@ -6,6 +6,7 @@ import { CreateTodoDto } from './models/create-todo-dto';
 import { SearchTodoDto } from './models/search-todo-dto';
 import { UpdateTodoDto } from './models/update-todo-dto';
 import { sortTodos } from '../utilities/sort-helper';
+import { SortType } from './models/sort-type';
 
 @Injectable()
 export class TodosService {
@@ -37,7 +38,9 @@ export class TodosService {
     }
 
     if (priorities != null && priorities != []) {
-      criteria['priority'] = { $in: Array.isArray(priorities) ? [...priorities] : [priorities] };
+      criteria['priority'] = {
+        $in: Array.isArray(priorities) ? priorities.map(x => x.toUpperCase()) : [(priorities as string).toUpperCase()],
+      };
     }
 
     const dueDateCriteria = {};
@@ -54,8 +57,7 @@ export class TodosService {
     }
 
     const results = await this.todoModel.find(criteria).exec();
-    const sortedResults = results.sort((a, b) => sortTodos(a, b, sortType, sortDirection));
-    return sortedResults;
+    return results.sort((a, b) => sortTodos(a[SortType[sortType]], b[SortType[sortType]], sortType, sortDirection));
   }
 
   async update(updateTodoDto: UpdateTodoDto): Promise<Todo[]> {

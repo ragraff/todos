@@ -116,8 +116,8 @@ describe('TodosService', () => {
       //Arrange
       const findSpy = spyOn(mockTodoModel, 'find').and.returnValue(mockFind);
       const execSpy = spyOn(mockFind, 'exec').and.stub();
-      const searchTodo: SearchTodoDto = { title: 'A title' };
-      const expected = { title: 'A title' };
+      const searchTodo: SearchTodoDto = { title: 'A title', sortDirection: 'ASC', sortType: 'TITLE' };
+      const expected = { title: { $regex: '.*A title.*' } };
 
       //Act
       service.search(searchTodo);
@@ -130,12 +130,34 @@ describe('TodosService', () => {
       expect(execSpy).toHaveBeenCalledWith();
     });
 
-    it('should add priority only', async () => {
+    it('should add single priority only', async () => {
       //Arrange
       const findSpy = spyOn(mockTodoModel, 'find').and.returnValue(mockFind);
       const execSpy = spyOn(mockFind, 'exec').and.stub();
-      const searchTodo: SearchTodoDto = { priority: 'Apriority' };
-      const expected = { priority: 'APRIORITY' };
+      const searchTodo: SearchTodoDto = { priorities: ['Apriority'], sortDirection: 'ASC', sortType: 'TITLE' };
+      const expected = { priority: { $in: ['APRIORITY'] } };
+
+      //Act
+      service.search(searchTodo);
+
+      //Assert
+      expect(findSpy).toHaveBeenCalledTimes(1);
+      expect(findSpy).toHaveBeenCalledWith(expected);
+
+      expect(execSpy).toHaveBeenCalledTimes(1);
+      expect(execSpy).toHaveBeenCalledWith();
+    });
+
+    it('should add multiple priorities', async () => {
+      //Arrange
+      const findSpy = spyOn(mockTodoModel, 'find').and.returnValue(mockFind);
+      const execSpy = spyOn(mockFind, 'exec').and.stub();
+      const searchTodo: SearchTodoDto = {
+        priorities: ['Apriority', 'BPriority'],
+        sortDirection: 'ASC',
+        sortType: 'TITLE',
+      };
+      const expected = { priority: { $in: ['APRIORITY', 'BPRIORITY'] } };
 
       //Act
       service.search(searchTodo);
@@ -152,7 +174,7 @@ describe('TodosService', () => {
       //Arrange
       const findSpy = spyOn(mockTodoModel, 'find').and.returnValue(mockFind);
       const execSpy = spyOn(mockFind, 'exec').and.stub();
-      const searchTodo: SearchTodoDto = { startOfRange: 'startOfRange' };
+      const searchTodo: SearchTodoDto = { startOfRange: 'startOfRange', sortDirection: 'ASC', sortType: 'TITLE' };
       const expected = { dueDate: { $gt: 'startOfRange' } };
 
       //Act
@@ -170,7 +192,7 @@ describe('TodosService', () => {
       //Arrange
       const findSpy = spyOn(mockTodoModel, 'find').and.returnValue(mockFind);
       const execSpy = spyOn(mockFind, 'exec').and.stub();
-      const searchTodo: SearchTodoDto = { endOfRange: 'endOfRange' };
+      const searchTodo: SearchTodoDto = { endOfRange: 'endOfRange', sortDirection: 'ASC', sortType: 'TITLE' };
       const expected = { dueDate: { $lt: 'endOfRange' } };
 
       //Act
@@ -190,11 +212,17 @@ describe('TodosService', () => {
       const execSpy = spyOn(mockFind, 'exec').and.stub();
       const searchTodo: SearchTodoDto = {
         title: 'A title',
-        priority: 'Apriority',
+        priorities: ['Apriority'],
         startOfRange: 'startOfRange',
         endOfRange: 'endOfRange',
+        sortDirection: 'ASC',
+        sortType: 'TITLE',
       };
-      const expected = { title: 'A title', priority: 'APRIORITY', dueDate: { $lt: 'endOfRange', $gt: 'startOfRange' } };
+      const expected = {
+        title: { $regex: '.*A title.*' },
+        priority: { $in: ['APRIORITY'] },
+        dueDate: { $lt: 'endOfRange', $gt: 'startOfRange' },
+      };
 
       //Act
       service.search(searchTodo);
@@ -225,6 +253,7 @@ describe('TodosService', () => {
     const findOneSpy = spyOn(mockTodoModel, 'findOne').and.returnValue(mockFind);
     const execSpy = spyOn(mockFind, 'exec').and.returnValue(mockExec);
     const removeSpy = spyOn(mockExec, 'remove').and.stub();
+    const getAllSpy = spyOn(service, 'getAll').and.stub();
 
     const id = 'an id';
 
@@ -239,5 +268,7 @@ describe('TodosService', () => {
     expect(execSpy).toHaveBeenCalledWith();
 
     expect(removeSpy).toHaveBeenCalledTimes(1);
+
+    expect(getAllSpy).toHaveBeenCalledTimes(1);
   });
 });

@@ -39,9 +39,11 @@ describe('Todos Controller', () => {
     const searchSpy = spyOn(service, 'search').and.stub();
     const searchTodo: SearchTodoDto = {
       title: 'A title',
-      priority: 'MEDIUM',
+      priorities: ['MEDIUM'],
       startOfRange: '2022-05-08T17:25:12.170Z',
       endOfRange: '2022-05-18T17:25:12.170Z',
+      sortType: 'TITLE',
+      sortDirection: 'ASC',
     };
 
     //Act

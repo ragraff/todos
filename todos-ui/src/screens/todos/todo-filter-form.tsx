@@ -45,7 +45,7 @@ const useStyles = makeStyles(() =>
   createStyles({
     paper: {
       padding: '10px',
-      backgroundColor: '#035e7b',
+      backgroundColor: '#938f94',
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'space-between',

@@ -2,6 +2,7 @@ import {
   TodosSetAction,
   SetTodoFilterAction,
   SetSortOptionsAction,
+  TodosFetchAction,
 } from '../actions';
 import { TodosActionTypes } from '../actions/todos.action.types';
 import { initialState } from './initial-state';
@@ -10,7 +11,8 @@ import { TodosSlice } from '../models/todos-slice';
 type AllowedTodosAction =
   | TodosSetAction
   | SetTodoFilterAction
-  | SetSortOptionsAction;
+  | SetSortOptionsAction
+  | TodosFetchAction;
 
 export function TodosReducer(
   state: TodosSlice = initialState,

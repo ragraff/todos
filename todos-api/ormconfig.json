@@ -1,0 +1,15 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3306,
+  "username": "root",
+  "password": "Password12345!",
+  "database": "todos",
+  "entities": ["**/*.entity.ts"],
+  "syncronize": true,
+  "insecureAuth": true,
+  "migrations": ["src/migrations/*.ts"],
+  "cli": {
+    "migrationsDir": "src/migrations"
+  }
+}

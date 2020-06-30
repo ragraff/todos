@@ -1,5 +1,7 @@
 import { IsDateString, IsOptional, Validate, IsNotEmpty } from 'class-validator';
-import { IsPriorityString, IsSortTypeString, IsSortDirectionString } from '../../common/is-priority-string';
+import { IsPriorityString } from '../../common/is-priority-string';
+import { IsSortDirectionString } from '../../common/is-sort-direction-string';
+import { IsSortTypeString } from '../../common/is-sort-type-string';
 
 export class SearchTodoDto {
   @IsOptional()
