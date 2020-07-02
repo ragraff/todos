@@ -5,11 +5,11 @@
   "username": "root",
   "password": "Password12345!",
   "database": "todos",
-  "entities": ["**/*.entity.ts"],
+  "entities": ["dist/**/*.entity.js"],
   "syncronize": true,
   "insecureAuth": true,
-  "migrations": ["src/migrations/*.ts"],
+  "migrations": ["dist/migration/**/*.js"],
   "cli": {
-    "migrationsDir": "src/migrations"
+    "migrationsDir": "migrations"
   }
 }
