@@ -5,7 +5,6 @@ import { TodoRepository } from './todos.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TodoSearchDto } from './interfaces/todo-search-dto';
 import { TodoUpdateDto } from './interfaces/todos-update.dto';
-import { DeleteResult } from 'typeorm';
 
 @Injectable()
 export class TodosService {

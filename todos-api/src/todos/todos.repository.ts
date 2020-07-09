@@ -1,11 +1,10 @@
-import { EntityRepository, Repository, Like, In, Between, MoreThan, LessThan, DeleteResult } from 'typeorm';
+import { EntityRepository, Repository, Like, In, Between, MoreThan, LessThan } from 'typeorm';
 import { Todo } from './entities/todo.entity';
 import { TodoCreateDto } from './interfaces/todos-create.dto';
 import { TodoSearchDto } from './interfaces/todo-search-dto';
 import { SortDirection } from './interfaces/sort-direction';
 import { SortType } from './interfaces/sort-type';
 import { TodoUpdateDto } from './interfaces/todos-update.dto';
-import { async } from 'rxjs/internal/scheduler/async';
 
 @EntityRepository(Todo)
 export class TodoRepository extends Repository<Todo> {

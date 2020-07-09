@@ -4,7 +4,6 @@ import { TodosService } from './todos.service';
 import { Todo } from './entities/todo.entity';
 import { TodoSearchDto } from './interfaces/todo-search-dto';
 import { TodoUpdateDto } from './interfaces/todos-update.dto';
-import { DeleteResult } from 'typeorm';
 
 @Controller('todos')
 export class TodosController {
