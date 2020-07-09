@@ -2,12 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { TodosController } from './todos.controller';
 import { TodosService } from './todos.service';
 import { todosMock } from './__stubData__/todos-mock';
-import { TodoSearchDto } from './interfaces/todo-search-dto';
-import { TodoCreateDto } from './interfaces/todos-create.dto';
-import { Priority } from './interfaces/priority';
-import { SortDirection } from './interfaces/sort-direction';
-import { SortType } from './interfaces/sort-type';
-import { TodoUpdateDto } from './interfaces/todos-update.dto';
+import { todoCreateMock } from './__stubData__/todo-create-dto-mock';
+import { searchTodosMock } from './__stubData__/todo-search-dto-mock';
+import { updateTodoMock } from './__stubData__/todo-update-dto-mock';
 
 jest.mock('./todos.service');
 
@@ -38,67 +35,46 @@ describe('Todos Controller', () => {
 
     //Assert
     expect(serviceGetTodosSpy).toHaveBeenCalledTimes(1);
+    expect(serviceGetTodosSpy).toHaveBeenCalledWith();
     expect(actual).toBe(todosMock);
   });
 
   it('should create the todo', async () => {
     //Arrange
     const serviceCreateTodoSpy = spyOn(service, 'createTodo').and.callThrough();
-    const todoCreate: TodoCreateDto = {
-      title: 'Title',
-      description: 'Description',
-      priority: Priority.HIGH,
-      dueDate: new Date('2020-05-05'),
-    };
 
     //Act
-    const actual = await controller.create(todoCreate);
+    const actual = await controller.create(todoCreateMock);
 
     //Assert
     expect(serviceCreateTodoSpy).toHaveBeenCalledTimes(1);
-    expect(serviceCreateTodoSpy).toHaveBeenCalledWith(todoCreate);
+    expect(serviceCreateTodoSpy).toHaveBeenCalledWith(todoCreateMock);
     expect(actual).toBe(todosMock[0]);
   });
 
   it('should search the todo', async () => {
     //Arrange
     const serviceSearchSpy = spyOn(service, 'searchTodos').and.callThrough();
-    const searchTodos: TodoSearchDto = {
-      id: '1',
-      title: 'Title',
-      priority: [Priority.HIGH, Priority.LOW],
-      startOfRange: new Date('2020-06=06'),
-      endOfRange: new Date('2020-07-07'),
-      sortDirection: SortDirection.Asc,
-      sortType: SortType.Title,
-    };
 
     //Act
-    const actual = await controller.search(searchTodos);
+    const actual = await controller.search(searchTodosMock);
 
     //Assert
     expect(serviceSearchSpy).toHaveBeenCalledTimes(1);
-    expect(serviceSearchSpy).toHaveBeenCalledWith(searchTodos);
+    expect(serviceSearchSpy).toHaveBeenCalledWith(searchTodosMock);
     expect(actual).toBe(todosMock);
   });
 
   it('should update the todo', async () => {
     //Arrange
     const serviceUpdateSpy = spyOn(service, 'updateTodo').and.callThrough();
-    const updateTodo: TodoUpdateDto = {
-      id: '1',
-      title: 'Title',
-      description: 'Desc',
-      priority: Priority.LOW,
-      dueDate: new Date('2020-08-08'),
-    };
 
     //Act
-    const actual = await controller.update(updateTodo);
+    const actual = await controller.update(updateTodoMock);
 
     //Assert
     expect(serviceUpdateSpy).toHaveBeenCalledTimes(1);
-    expect(serviceUpdateSpy).toHaveBeenCalledWith(updateTodo);
+    expect(serviceUpdateSpy).toHaveBeenCalledWith(updateTodoMock);
     expect(actual).toBe(todosMock[1]);
   });
 

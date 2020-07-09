@@ -9,7 +9,7 @@ import { TodoUpdateDto } from './interfaces/todos-update.dto';
 @Injectable()
 export class TodosService {
   constructor(
-    @InjectRepository(TodoRepository)
+    @InjectRepository(Todo)
     private todosRepository: TodoRepository,
   ) {}
 
