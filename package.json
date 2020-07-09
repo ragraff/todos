@@ -9,10 +9,12 @@
   "scripts": {
     "lint": "concurrently --kill-others-on-fail --names lint:api,lint:ui \"npm run lint:api\" \"npm run lint:ui\"",
     "lint:api": "npm run lint --prefix todos-api",
-    "lint-staged": "concurrently --kill-others-on-fail --names lint:api:staged,lint:ui:staged \"npm run lint:api:staged\" \"npm run lint:ui:staged\"",
+    "lint-staged": "concurrently --kill-others-on-fail --names lint-staged:api,lint-staged:ui \"npm run lint-staged:api\" \"npm run lint-staged:ui\"",
     "lint-staged:api": "npm run lint-staged --prefix todos-api",
     "lint-staged:ui": "npm run lint-staged --prefix todos-ui",
     "lint:ui": "npm run lint --prefix todos-ui",
+    "pre-commit": "concurrently --kill-others-on-fail --names lint-staged,pretty-quick \"npm run lint-staged\" \"npm run pretty-quick\"",
+    "pre-push": "npm run test",
     "pretty-quick": "concurrently --kill-others-on-fail --names pretty-quick:api,pretty-quick:ui \"npm run pretty-quick:api\" \"npm run pretty-quick:ui\"",
     "pretty-quick:api": "npm run pretty-quick --prefix todos-api",
     "pretty-quick:ui": "npm run pretty-quick --prefix todos-ui",
@@ -35,7 +37,12 @@
   "dependencies": {},
   "devDependencies": {
     "concurrently": "^5.2.0",
-    "husky": "^4.2.5",
-    "pre-commit": "^1.2.2"
+    "husky": "^4.2.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run pre-commit",
+      "pre-push": "npm run pre-push"
+    }
   }
 }

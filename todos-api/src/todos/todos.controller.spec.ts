@@ -3,7 +3,6 @@ import { TodosController } from './todos.controller';
 import { TodosService } from './todos.service';
 import { todosMock } from './__stubData__/todos-mock';
 import { TodoSearchDto } from './interfaces/todo-search-dto';
-import { async } from 'rxjs/internal/scheduler/async';
 import { TodoCreateDto } from './interfaces/todos-create.dto';
 import { Priority } from './interfaces/priority';
 import { SortDirection } from './interfaces/sort-direction';
