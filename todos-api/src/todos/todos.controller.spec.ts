@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TodosController } from './todos.controller';
 import { TodosService } from './todos.service';
-import { todosMock } from './__stubData__/todos-mock';
-import { todoCreateMock } from './__stubData__/todo-create-dto-mock';
-import { searchTodosMock } from './__stubData__/todo-search-dto-mock';
-import { updateTodoMock } from './__stubData__/todo-update-dto-mock';
+import { todosMock } from './__mocks__/__stubData__/todos-mock';
+import { todoCreateMock } from './__mocks__/__stubData__/todo-create-dto-mock';
+import { searchTodosMock } from './__mocks__/__stubData__/todo-search-dto-mock';
+import { updateTodoMock } from './__mocks__/__stubData__/todo-update-dto-mock';
 
 jest.mock('./todos.service');
 

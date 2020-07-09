@@ -1,5 +1,5 @@
-import { TodoUpdateDto } from '../interfaces/todos-update.dto';
-import { Priority } from '../interfaces/priority';
+import { TodoUpdateDto } from '../../interfaces/todos-update.dto';
+import { Priority } from '../../interfaces/priority';
 
 export const updateTodoMock: TodoUpdateDto = {
   id: '1',

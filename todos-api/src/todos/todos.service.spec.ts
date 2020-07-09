@@ -3,10 +3,10 @@ import { TodosService } from './todos.service';
 import { TodoRepository } from './todos.repository';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Todo } from './entities/todo.entity';
-import { todosMock } from './__stubData__/todos-mock';
-import { searchTodosMock } from './__stubData__/todo-search-dto-mock';
-import { todoCreateMock } from './__stubData__/todo-create-dto-mock';
-import { updateTodoMock } from './__stubData__/todo-update-dto-mock';
+import { todosMock } from './__mocks__/__stubData__/todos-mock';
+import { todoCreateMock } from './__mocks__/__stubData__/todo-create-dto-mock';
+import { updateTodoMock } from './__mocks__/__stubData__/todo-update-dto-mock';
+import { searchTodosMockById } from './__mocks__/__stubData__/todo-search-dto-mock';
 
 jest.mock('./todos.repository');
 
@@ -58,11 +58,11 @@ describe('TodosService', () => {
     const repositorySearchTodos = spyOn(repo, 'searchTodos').and.callThrough();
 
     //Act
-    const actual = await service.searchTodos(searchTodosMock);
+    const actual = await service.searchTodos(searchTodosMockById);
 
     //Assert
     expect(repositorySearchTodos).toHaveBeenCalledTimes(1);
-    expect(repositorySearchTodos).toHaveBeenCalledWith(searchTodosMock);
+    expect(repositorySearchTodos).toHaveBeenCalledWith(searchTodosMockById);
     expect(actual).toBe(todosMock);
   });
 

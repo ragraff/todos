@@ -8,6 +8,6 @@ export class TodoSearchDto {
   readonly priority?: Priority[] | Priority;
   readonly startOfRange?: Date;
   readonly endOfRange?: Date;
-  readonly sortType: SortType;
-  readonly sortDirection: SortDirection;
+  readonly sortType?: SortType;
+  readonly sortDirection?: SortDirection;
 }

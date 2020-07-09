@@ -12,10 +12,9 @@ export class TodoRepository extends Repository<Todo> {
   getTodos = async (): Promise<Todo[]> => await this.find();
   searchTodos = async (todoSearch: TodoSearchDto): Promise<Todo[]> => {
     const { sortType, sortDirection } = todoSearch;
-    const mappedSortType = this.mapSortType(sortType);
     const whereCriteria = this.getWhereCriteria(todoSearch);
     const orderCriteria = {};
-    orderCriteria[mappedSortType] = sortDirection || SortDirection.Asc;
+    orderCriteria[sortType || SortType.Title] = sortDirection || SortDirection.Asc;
     const criteria = { where: { ...whereCriteria }, order: { ...orderCriteria } };
 
     return await this.find(criteria);
@@ -25,19 +24,6 @@ export class TodoRepository extends Repository<Todo> {
     await this.delete(id);
     return this.getTodos();
   };
-
-  private mapSortType(sortType: string) {
-    switch (sortType) {
-      case 'PRIORITY':
-        return SortType.Priority;
-      case 'DUE_DATE':
-        return SortType.DueDate;
-      case 'CREATED_DATE':
-        return SortType.CreatedDate;
-      default:
-        return SortType.Title;
-    }
-  }
 
   private getWhereCriteria({ id, title, priority, startOfRange, endOfRange }: TodoSearchDto): any {
     if (id != null) {
