@@ -36,7 +36,7 @@ export async function updateTodo(todo: Todo): Promise<Todo[]> {
 }
 
 export async function deleteTodo(todo: Todo): Promise<Todo[]> {
-  const response = await fetch(`http://localhost:3001/todos/${todo._id}`, {
+  const response = await fetch(`http://localhost:3001/todos/${todo.id}`, {
     method: 'DELETE',
   });
   const json = await response.json();
@@ -59,11 +59,11 @@ export async function createTodo(todo: Todo): Promise<Todo[]> {
 }
 
 const getTodoFormBody = (todo: Todo, isCreate = false) => {
-  const { _id, title, description, priority, dueDate } = todo;
+  const { id, title, description, priority, dueDate } = todo;
 
   const formBody = [];
   if (!isCreate) {
-    formBody.push(getFormBodyItem('_id', _id));
+    formBody.push(getFormBodyItem('id', id));
   }
   formBody.push(getFormBodyItem('title', title));
   formBody.push(getFormBodyItem('description', description));

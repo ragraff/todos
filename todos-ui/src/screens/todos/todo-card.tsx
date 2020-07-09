@@ -200,7 +200,7 @@ const TodoCardComponent: FC<TodoCardProps> = ({
           selectedDate={selectedDate}
           handleDateTimeChange={handleDateTimeChange}
         />
-        <Tooltip title="Save">
+        <Tooltip title={isCreateCard ? 'Save' : 'Update'}>
           <IconButton aria-label="save" type="submit" disabled={!isDirty}>
             <SaveIcon />
           </IconButton>

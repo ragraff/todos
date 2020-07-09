@@ -84,7 +84,9 @@ const TodosListComponent: FC<TodosListProps> = ({
         </div>
       </div>
       <div className="todo-body">
-        {todos && todos.map(todo => <TodoCard key={todo._id} todo={todo} />)}
+        {todos == null
+          ? null
+          : todos.map(todo => <TodoCard key={todo.id} todo={todo} />)}
       </div>
       <Dialog
         open={open}
@@ -95,7 +97,7 @@ const TodosListComponent: FC<TodosListProps> = ({
         <TodoCard
           isCreateCard={true}
           todo={{
-            _id: '',
+            id: '',
             title: '',
             description: '',
             priority: Priority.LOW,

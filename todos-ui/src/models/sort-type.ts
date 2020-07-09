@@ -1,5 +1,6 @@
 export enum SortType {
   TITLE = 'TITLE',
   PRIORITY = 'PRIORITY',
-  DUEDATE = 'DUE DATE',
+  DUE_DATE = 'DUE DATE',
+  CREATED_DATE = 'CREATED DATE',
 }

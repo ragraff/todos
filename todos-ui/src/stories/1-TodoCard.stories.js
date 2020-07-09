@@ -7,7 +7,7 @@ export default {
   component: TodoCard,
 };
 const todo = {
-  _id: '1',
+  id: '1',
   title: 'Title',
   description: 'desc',
   priority: Priority.LOW,

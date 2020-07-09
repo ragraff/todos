@@ -1,26 +1,26 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-import { Priority } from '../models/priority';
+import { Priority } from '../interfaces/priority';
 
 @Entity()
 export class Todo {
-  // @PrimaryGeneratedColumn('uuid')
-  // id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  @Column('varchar', { length: 200 })
+  @Column('varchar', { nullable: false, length: 200 })
   title: string;
 
   @Column('text', { nullable: true })
-  description?: string;
+  description: string;
 
-  @Column('enum', { enum: Priority, nullable: true })
-  priority?: Priority;
+  @Column('enum', { enum: Priority, default: Priority.LOW })
+  priority: Priority;
 
-  @Column('date', { nullable: true })
-  dueDate?: Date;
+  @Column('datetime', { nullable: true })
+  dueDate: Date;
 
-  // @CreateDateColumn()
-  // createDate?: Date;
+  @CreateDateColumn()
+  createDate: Date;
 
-  // @UpdateDateColumn()
-  // updatedDate?: Date;
+  @UpdateDateColumn()
+  updateDate: Date;
 }

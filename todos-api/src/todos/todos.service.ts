@@ -1,73 +1,36 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Todo } from './schemas/todo.schema';
-import { Model } from 'mongoose';
-import { CreateTodoDto } from './models/create-todo-dto';
-import { SearchTodoDto } from './models/search-todo-dto';
-import { UpdateTodoDto } from './models/update-todo-dto';
-import { sortTodos } from '../utilities/sort-helper';
-import { SortType } from './models/sort-type';
+import { Todo } from './entities/todo.entity';
+import { TodoCreateDto } from './interfaces/todos-create.dto';
+import { TodoRepository } from './todos.repository';
+import { InjectRepository } from '@nestjs/typeorm';
+import { TodoSearchDto } from './interfaces/todo-search-dto';
+import { TodoUpdateDto } from './interfaces/todos-update.dto';
+import { DeleteResult } from 'typeorm';
 
 @Injectable()
 export class TodosService {
-  constructor(@InjectModel(Todo.name) private todoModel: Model<Todo>) {}
+  constructor(
+    @InjectRepository(TodoRepository)
+    private todosRepository: TodoRepository,
+  ) {}
 
-  async create(createTodoDto: CreateTodoDto): Promise<Todo[]> {
-    await this.todoModel.create(createTodoDto);
-    return this.getAll();
+  async getTodos(): Promise<Todo[]> {
+    return this.todosRepository.getTodos();
   }
 
-  async getAll(): Promise<Todo[]> {
-    return this.todoModel.find().exec();
+  async createTodo(todoCreate: TodoCreateDto): Promise<Todo> {
+    return this.todosRepository.createTodo(todoCreate);
   }
 
-  async getById(id: string): Promise<Todo> {
-    return this.todoModel.findOne({ _id: id }).exec();
+  async searchTodos(todoSearch: TodoSearchDto): Promise<Todo[]> {
+    return this.todosRepository.searchTodos(todoSearch);
   }
 
-  async getByPriority(priority: string): Promise<Todo[]> {
-    return this.todoModel.find({ priority: priority.toUpperCase() }).exec();
+  async updateTodo(todoUpdate: TodoUpdateDto): Promise<Todo> {
+    return this.todosRepository.updateTodo(todoUpdate);
   }
 
-  async search(searchTodoDto: SearchTodoDto): Promise<Todo[]> {
-    const criteria = {};
-    const { title, priorities, startOfRange, endOfRange, sortDirection, sortType } = searchTodoDto;
-
-    if (title != null && title != '') {
-      criteria['title'] = { $regex: `.*${title}.*` };
-    }
-
-    if (priorities != null && priorities != []) {
-      criteria['priority'] = {
-        $in: Array.isArray(priorities) ? priorities.map(x => x.toUpperCase()) : [(priorities as string).toUpperCase()],
-      };
-    }
-
-    const dueDateCriteria = {};
-    if (startOfRange != null) {
-      dueDateCriteria['$gt'] = startOfRange;
-    }
-
-    if (endOfRange != null) {
-      dueDateCriteria['$lt'] = endOfRange;
-    }
-
-    if (Object.keys(dueDateCriteria).length !== 0) {
-      criteria['dueDate'] = { ...dueDateCriteria };
-    }
-
-    const results = await this.todoModel.find(criteria).exec();
-    return results.sort((a, b) => sortTodos(a[SortType[sortType]], b[SortType[sortType]], sortType, sortDirection));
-  }
-
-  async update(updateTodoDto: UpdateTodoDto): Promise<Todo[]> {
-    await this.todoModel.update({ _id: updateTodoDto._id }, { ...updateTodoDto });
-    return this.getAll();
-  }
-
-  async delete(_id: string): Promise<Todo[]> {
-    const theTodo = await this.todoModel.findOne({ _id: _id }).exec();
-    await theTodo.remove();
-    return this.getAll();
+  async deleteTodo(id: string): Promise<Todo[]> {
+    return this.todosRepository.deleteTodo(id);
   }
 }

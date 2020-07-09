@@ -1,46 +1,37 @@
-import { Controller, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
-import { CreateTodoDto } from './models/create-todo-dto';
-import { UpdateTodoDto } from './models/update-todo-dto';
+import { Controller, Post, Body, Inject, Get, Put, Delete, Param } from '@nestjs/common';
+import { TodoCreateDto } from './interfaces/todos-create.dto';
 import { TodosService } from './todos.service';
-import { Todo } from './schemas/todo.schema';
-import { ParsePriorityStringPipe } from '../common/parse-priority-string';
-import { SearchTodoDto } from './models/search-todo-dto';
+import { Todo } from './entities/todo.entity';
+import { TodoSearchDto } from './interfaces/todo-search-dto';
+import { TodoUpdateDto } from './interfaces/todos-update.dto';
+import { DeleteResult } from 'typeorm';
 
 @Controller('todos')
 export class TodosController {
-  constructor(private readonly todoService: TodosService) {}
+  constructor(@Inject(TodosService) private todosService: TodosService) {}
+
   @Get()
-  async getAll(): Promise<Todo[]> {
-    return this.todoService.getAll();
-  }
-
-  @Post('search')
-  async search(@Body() searchTodoDto: SearchTodoDto): Promise<Todo[]> {
-    return this.todoService.search(searchTodoDto);
-  }
-
-  @Get('id/:id')
-  async getById(@Param('id') id: string): Promise<Todo> {
-    return this.todoService.getById(id);
-  }
-
-  @Get('priority/:priority')
-  async getByPriority(@Param('priority', ParsePriorityStringPipe) priority: string): Promise<Todo[]> {
-    return this.todoService.getByPriority(priority);
+  async getTodos(): Promise<Todo[]> {
+    return this.todosService.getTodos();
   }
 
   @Post()
-  async create(@Body() createTodo: CreateTodoDto): Promise<Todo[]> {
-    return this.todoService.create({ ...createTodo, priority: createTodo.priority.toUpperCase() });
+  async create(@Body() todoCreate: TodoCreateDto): Promise<Todo> {
+    return this.todosService.createTodo(todoCreate);
+  }
+
+  @Post('search')
+  async search(@Body() todoSearch: TodoSearchDto): Promise<Todo[]> {
+    return this.todosService.searchTodos(todoSearch);
   }
 
   @Put()
-  async update(@Body() updateTodo: UpdateTodoDto): Promise<Todo[]> {
-    return this.todoService.update({ ...updateTodo, priority: updateTodo.priority.toUpperCase() });
+  async update(@Body() todoUpdate: TodoUpdateDto): Promise<Todo> {
+    return this.todosService.updateTodo(todoUpdate);
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string): Promise<Todo[]> {
-    return this.todoService.delete(id);
+  async deleteTodo(@Param('id') id: string): Promise<Todo[]> {
+    return this.todosService.deleteTodo(id);
   }
 }
