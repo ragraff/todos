@@ -3,10 +3,10 @@ import { TodosService } from './todos.service';
 import { TodoRepository } from './todos.repository';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Todo } from './entities/todo.entity';
-import { todosMock } from './__mocks__/__stubData__/todos-mock';
-import { todoCreateMock } from './__mocks__/__stubData__/todo-create-dto-mock';
-import { updateTodoMock } from './__mocks__/__stubData__/todo-update-dto-mock';
-import { searchTodosMockById } from './__mocks__/__stubData__/todo-search-dto-mock';
+import { todosMock } from '../__stubData__/todos-mock';
+import { todoCreateMock } from '../__stubData__/todo-create-dto-mock';
+import { updateTodoMock } from '../__stubData__/todo-update-dto-mock';
+import { searchTodosMockById } from '../__stubData__/todo-search-dto-mock';
 
 jest.mock('./todos.repository');
 

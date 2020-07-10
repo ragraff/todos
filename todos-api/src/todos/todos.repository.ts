@@ -12,6 +12,7 @@ export class TodoRepository extends Repository<Todo> {
   getTodos = async (): Promise<Todo[]> => await this.find();
   searchTodos = async (todoSearch: TodoSearchDto): Promise<Todo[]> => {
     const { sortType, sortDirection } = todoSearch;
+    console.log(`sortType: ${sortType}, sortDirection: ${sortDirection}`);
     const whereCriteria = this.getWhereCriteria(todoSearch);
     const orderCriteria = {};
     orderCriteria[sortType || SortType.Title] = sortDirection || SortDirection.Asc;

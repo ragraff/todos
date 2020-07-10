@@ -1,6 +1,6 @@
 import { getAllTodos } from './todos.selectors';
-import { MockState } from '../__mock-data__/mock-state';
-import { mockTodos } from '../__mock-data__/mock-todos';
+import { MockState } from '../__mocks__/mock-state';
+import { mockTodos } from '../__mocks__/mock-todos';
 
 describe('TodosSelector', () => {
   it('should get all todos', () => {

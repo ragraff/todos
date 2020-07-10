@@ -1,7 +1,7 @@
-import { TodoSearchDto } from '../../interfaces/todo-search-dto';
-import { SortDirection } from '../../interfaces/sort-direction';
-import { SortType } from '../../interfaces/sort-type';
-import { Priority } from '../../interfaces/priority';
+import { TodoSearchDto } from '../todos/interfaces/todo-search-dto';
+import { SortDirection } from '../todos/interfaces/sort-direction';
+import { SortType } from '../todos/interfaces/sort-type';
+import { Priority } from '../todos/interfaces/priority';
 
 export const searchTodosMockById: TodoSearchDto = {
   id: '1',

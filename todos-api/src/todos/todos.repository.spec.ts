@@ -1,8 +1,8 @@
 import { TestingModule, Test } from '@nestjs/testing';
 import { TodoRepository } from './todos.repository';
-import { todoCreateMock } from './__mocks__/__stubData__/todo-create-dto-mock';
+import { todoCreateMock } from '../__stubData__/todo-create-dto-mock';
 import { Like, In, MoreThan, LessThan, Between } from 'typeorm';
-import { todosMock } from './__mocks__/__stubData__/todos-mock';
+import { todosMock } from '../__stubData__/todos-mock';
 import {
   searchTodosMockById,
   searchTodosMockByTitle,
@@ -11,11 +11,11 @@ import {
   searchTodosMockByPriorities,
   searchTodosMockByEndOfRange,
   searchTodosMockByStartOfRangeAndEndOfRange,
-} from './__mocks__/__stubData__/todo-search-dto-mock';
+} from '../__stubData__/todo-search-dto-mock';
 import { SortDirection } from './interfaces/sort-direction';
 import { TodoSearchDto } from './interfaces/todo-search-dto';
 import { Priority } from './interfaces/priority';
-import { updateTodoMock } from './__mocks__/__stubData__/todo-update-dto-mock';
+import { updateTodoMock } from '../__stubData__/todo-update-dto-mock';
 
 describe('TodoRepository', () => {
   let repo: TodoRepository;

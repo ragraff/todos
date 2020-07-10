@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TodosController } from './todos.controller';
 import { TodosService } from './todos.service';
-import { todosMock } from './__mocks__/__stubData__/todos-mock';
-import { todoCreateMock } from './__mocks__/__stubData__/todo-create-dto-mock';
-import { searchTodosMock } from './__mocks__/__stubData__/todo-search-dto-mock';
-import { updateTodoMock } from './__mocks__/__stubData__/todo-update-dto-mock';
+import { todosMock } from '../__stubData__/todos-mock';
+import { todoCreateMock } from '../__stubData__/todo-create-dto-mock';
+import { updateTodoMock } from '../__stubData__/todo-update-dto-mock';
+import { searchTodosMockById } from '../__stubData__/todo-search-dto-mock';
 
 jest.mock('./todos.service');
 
@@ -57,11 +57,11 @@ describe('Todos Controller', () => {
     const serviceSearchSpy = spyOn(service, 'searchTodos').and.callThrough();
 
     //Act
-    const actual = await controller.search(searchTodosMock);
+    const actual = await controller.search(searchTodosMockById);
 
     //Assert
     expect(serviceSearchSpy).toHaveBeenCalledTimes(1);
-    expect(serviceSearchSpy).toHaveBeenCalledWith(searchTodosMock);
+    expect(serviceSearchSpy).toHaveBeenCalledWith(searchTodosMockById);
     expect(actual).toBe(todosMock);
   });
 

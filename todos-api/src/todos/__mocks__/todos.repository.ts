@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { todosMock } from './__stubData__/todos-mock';
+import { todosMock } from '../../__stubData__/todos-mock';
 import { Todo } from '../entities/todo.entity';
 
 @Injectable()

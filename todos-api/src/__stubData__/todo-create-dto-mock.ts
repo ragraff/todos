@@ -1,5 +1,5 @@
-import { TodoCreateDto } from '../../interfaces/todos-create.dto';
-import { Priority } from '../../interfaces/priority';
+import { TodoCreateDto } from '../todos/interfaces/todos-create.dto';
+import { Priority } from '../todos/interfaces/priority';
 
 export const todoCreateMock: TodoCreateDto = {
   title: 'Title',

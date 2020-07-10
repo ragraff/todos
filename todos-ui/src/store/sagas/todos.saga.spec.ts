@@ -13,7 +13,7 @@ jest.mock('../../services/todos.service', () => {
 import { expectSaga } from 'redux-saga-test-plan';
 import { fetchTodosSaga } from './todos.saga';
 import { createTodosSetAction, createTodosFetchAction } from '../actions';
-import { mockTodos } from '../__mock-data__/mock-todos';
+import { mockTodos } from '../__mocks__/mock-todos';
 import { getTodos } from '../../services/todos.service';
 import { getTodoFilter, getSortOptions } from '../selectors';
 

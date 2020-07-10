@@ -1,6 +1,6 @@
 import { TodosActionTypes } from './todos.action.types';
 import { createTodosFetchAction, createTodosSetAction } from './todos.actions';
-import { mockTodos } from '../__mock-data__/mock-todos';
+import { mockTodos } from '../__mocks__/mock-todos';
 
 describe('actions', () => {
   it('should create the TodosFetchAction', () => {

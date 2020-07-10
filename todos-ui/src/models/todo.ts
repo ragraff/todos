@@ -4,4 +4,6 @@ export interface Todo {
   description: string;
   priority: string;
   dueDate: Date;
+  createDate: Date;
+  updateDate: Date;
 }

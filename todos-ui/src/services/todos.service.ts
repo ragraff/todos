@@ -1,6 +1,12 @@
 import { Todo } from '../models/todo';
+import { AppConfig } from '../config';
 import { SortOptions } from '../models/sort';
 import { TodoFilter } from '../models/todo-filter';
+import { HttpVerb } from '../models/http-verb';
+import { sortTypeMapper } from './mapper/todos.mapper';
+
+export const xWwwFormUrlEncoded =
+  'application/x-www-form-urlencoded; charset=UTF-8';
 
 export async function getTodos(
   todoFilter: TodoFilter,
@@ -9,10 +15,10 @@ export async function getTodos(
   const formBody = getSearchOptionsFormBody(todoFilter, sortOptions);
   const formData = formBody.join('&');
 
-  const response = await fetch('http://localhost:3001/todos/search', {
-    method: 'POST',
+  const response = await fetch(AppConfig.todo.search, {
+    method: HttpVerb.POST,
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+      'Content-Type': xWwwFormUrlEncoded,
     },
     body: formData,
   });
@@ -24,10 +30,10 @@ export async function updateTodo(todo: Todo): Promise<Todo[]> {
   const formBody = getTodoFormBody(todo);
   const formData = formBody.join('&');
 
-  const response = await fetch('http://localhost:3001/todos', {
-    method: 'PUT',
+  const response = await fetch(AppConfig.todo.base, {
+    method: HttpVerb.PUT,
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+      'Content-Type': xWwwFormUrlEncoded,
     },
     body: formData,
   });
@@ -36,8 +42,8 @@ export async function updateTodo(todo: Todo): Promise<Todo[]> {
 }
 
 export async function deleteTodo(todo: Todo): Promise<Todo[]> {
-  const response = await fetch(`http://localhost:3001/todos/${todo.id}`, {
-    method: 'DELETE',
+  const response = await fetch(`${AppConfig.todo.base}/${todo.id}`, {
+    method: HttpVerb.DELETE,
   });
   const json = await response.json();
   return json as Todo[];
@@ -47,10 +53,10 @@ export async function createTodo(todo: Todo): Promise<Todo[]> {
   const formBody = getTodoFormBody(todo, true);
   const formData = formBody.join('&');
 
-  const response = await fetch('http://localhost:3001/todos', {
-    method: 'POST',
+  const response = await fetch(AppConfig.todo.base, {
+    method: HttpVerb.POST,
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+      'Content-Type': xWwwFormUrlEncoded,
     },
     body: formData,
   });
@@ -104,7 +110,7 @@ const getSearchOptionsFormBody = (
     );
   }
 
-  formBody.push(getFormBodyItem('sortType', sortType));
+  formBody.push(getFormBodyItem('sortType', sortTypeMapper(sortType)));
   formBody.push(getFormBodyItem('sortDirection', sortDirection));
   return formBody;
 };

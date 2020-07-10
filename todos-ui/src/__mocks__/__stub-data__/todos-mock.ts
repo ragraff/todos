@@ -1,9 +1,7 @@
-import { Priority } from '../../interfaces/priority';
-import { TodoSearchDto } from '../../interfaces/todo-search-dto';
-import { SortDirection } from '../../interfaces/sort-direction';
-import { SortType } from '../../interfaces/sort-type';
+import { Priority } from '../../models/priority';
+import { Todo } from '../../models/todo';
 
-export const todosMock = [
+export const todosMock: Todo[] = [
   {
     id: '1',
     title: 'Title 1',

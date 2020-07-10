@@ -102,6 +102,8 @@ const TodosListComponent: FC<TodosListProps> = ({
             description: '',
             priority: Priority.LOW,
             dueDate: new Date(),
+            createDate: new Date(),
+            updateDate: new Date(),
           }}
         />
       </Dialog>
